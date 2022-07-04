@@ -142,6 +142,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="File_manager.cpp" />
+    <ClCompile Include="HardDisk.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HardDisk.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
