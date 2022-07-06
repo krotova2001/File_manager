@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <filesystem>
 #include <Windows.h>
+#include <fstream>
 //#include <vector>
 #include "HardDisk.h" // испорт объекта, который отображает информацию о жестких дисках
 
@@ -75,6 +76,63 @@ void Rename(std::filesystem::path p)
     {
         cout << "Исходный файл не существует\n";
         return;
+    }
+}
+
+void Moove(std::filesystem::path p)
+{
+    string old_name, new_path;
+    cout << "Введите имя исходного файла\n";
+    cin >> old_name;
+    fs::path old_path = p / old_name;
+  
+    cout << "Введите имя нового пути\n";
+    cin >> new_path;
+
+    fs::path new_path_full = fs::path{ new_path };
+    new_path_full /=  old_name;
+    if (old_path.has_filename())
+    {
+        fs::rename(old_path, new_path_full);
+        if (new_path_full.has_stem())
+        {
+                cout << "Успешно\n";
+        }
+        else
+        {
+            cout << "Ошибка\n";
+            return;
+        }
+    }
+    else
+    {
+        cout << "Исходный файл не существует\n";
+        return;
+    }
+}
+
+void Read(std::filesystem::path p)
+{
+    string name;
+    cout << "Введите имя файла\n";
+    cin >> name;
+    ifstream file;
+    file.open(p/name);
+    if (file.is_open())
+    {
+        cout << "--------------------------------\n";
+        while (!file.eof())
+        {
+            char buff[1024];
+            file.getline(buff, 1023);
+            cout << buff <<"\n";
+        }
+        cout << "--------------------------------\n";
+        file.close();
+    }
+    else
+    {
+        cout << "Невозможно открыть" << p << name <<"\n";
     }
 }
 
@@ -155,12 +213,15 @@ int main(int argс, char* argv[]) // включим аргументы кома�
             cout << "Введите имя файла для удаления\n";
             cin >> temp;
             Remoove_file(p, temp);
+            break;
         case 8:
             Rename(p);
             break;
         case 9:
+            Moove(p);
             break;
         case 10:
+            Read(p);
             break;
         default:
             break;
