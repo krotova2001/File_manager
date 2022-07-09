@@ -53,8 +53,8 @@ public:
 							break;
 						}
 					}
+					lst.push_back(hr);
 				}
-				lst.push_back(hr);
 			} while (FindNextVolumeA(find, m, 1024));
 			FindVolumeClose(find);
 		}
